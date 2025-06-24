@@ -17,9 +17,12 @@ private slots:
     void on_enterDfuButton_clicked();
     void on_checkConnectionButton_clicked();
     void on_alertButton_clicked();
+ void on_scanButton_clicked();
 
 private:
     Ui::MainWindow *ui;
     bool sendDfuCommand();
     bool isDeviceConnected();
+     void scanUsbDevices();
+
 };

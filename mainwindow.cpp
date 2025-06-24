@@ -1,8 +1,10 @@
 #include "mainwindow.h"
 #include <QMessageBox>
-#include "ui_mainwindow.h" // This must be included so Ui::MainWindow is a complete type
+#include "ui_mainwindow.h"
 #include "usb/dfu_handler.h"
-
+#include "usb/usb_scan.h"
+#include <libusb-1.0/libusb.h>
+#include <QStringList>
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow) {
@@ -11,6 +13,8 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->dfuButton, &QPushButton::clicked, this, &MainWindow::on_enterDfuButton_clicked);
     connect(ui->checkButton, &QPushButton::clicked, this, &MainWindow::on_checkConnectionButton_clicked);
     connect(ui->alertButton, &QPushButton::clicked, this, &MainWindow::on_alertButton_clicked);
+    connect(ui->scanButton, &QPushButton::clicked, this, &MainWindow::on_scanButton_clicked);
+
 }
 
 MainWindow::~MainWindow() = default;
@@ -35,11 +39,35 @@ void MainWindow::on_alertButton_clicked() {
     QMessageBox::information(this, "Status", "App is working!");
 }
 
-// Dummy implementations - replace with your actual logic
+
+
 bool MainWindow::sendDfuCommand() {
-    return true;
+    auto device = findUsbDevice();
+    if (!device) {
+        QMessageBox::warning(this, "Device", "No USB device detected");
+        return false;
+    }
+    auto [vid, pid] = *device;
+    return sendDfuUsbCommand(vid, pid);
 }
 
 bool MainWindow::isDeviceConnected() {
-    return false;
+    auto device = findUsbDevice();
+    if (!device)
+        return false;
+    auto [vid, pid] = *device;
+    return checkDeviceConnection(vid, pid);
+}
+
+void MainWindow::on_scanButton_clicked() {
+    // Example: scan for USB devices and show a message
+    auto device = findUsbDevice();
+    if (device) {
+        auto [vid, pid] = *device;
+        QMessageBox::information(this, "USB Scan", QString("Found device: VID=%1 PID=%2")
+                                 .arg(vid, 4, 16, QChar('0'))
+                                 .arg(pid, 4, 16, QChar('0')));
+    } else {
+        QMessageBox::warning(this, "USB Scan", "No USB devices found.");
+    }
 }
