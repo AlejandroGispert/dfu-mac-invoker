@@ -33,11 +33,13 @@ qt6_wrap_ui(UI_HEADERS ${UIS})
 add_executable(dfu_gui ${SOURCES} ${HEADERS} ${UI_HEADERS})
 
 target_include_directories(dfu_gui PRIVATE ${LIBUSB_INCLUDE_DIRS} ${CMAKE_CURRENT_BINARY_DIR})
-target_link_libraries(dfu_gui PRIVATE Qt6::Widgets ${LIBUSB_LIBRARIES})
+target_link_libraries(dfu_gui PRIVATE Qt6::Widgets /usr/local/lib/libusb-1.0.dylib)
 
 # Find macOS frameworks
 find_library(COREFOUNDATION_FRAMEWORK CoreFoundation)
 find_library(IOKIT_FRAMEWORK IOKit)
+
+link_directories(/usr/local/lib)
 
 target_link_libraries(dfu_gui PRIVATE
     ${COREFOUNDATION_FRAMEWORK}
@@ -49,3 +51,5 @@ if(APPLE)
         MACOSX_RPATH ON
     )
 endif()
+
+

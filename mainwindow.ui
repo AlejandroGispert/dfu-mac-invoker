@@ -3,48 +3,118 @@
  <class>MainWindow</class>
  <widget class="QMainWindow" name="MainWindow">
   <property name="geometry">
-   <rect>
-    <x>0</x>
-    <y>0</y>
-    <width>400</width>
-    <height>200</height>
-   </rect>
+   <rect><x>0</x><y>0</y><width>500</width><height>400</height></rect>
   </property>
   <property name="windowTitle">
-   <string>DFU App</string>
+   <string>DFU Control Panel</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <layout class="QVBoxLayout" name="verticalLayout">
+   <layout class="QVBoxLayout" name="mainLayout">
     <item>
-     <widget class="QPushButton" name="dfuButton">
+     <widget class="QLabel" name="titleLabel">
       <property name="text">
-       <string>Enter DFU Mode</string>
+       <string>Device Firmware Utility</string>
       </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QPushButton" name="checkButton">
-      <property name="text">
-       <string>Check Device Connection</string>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
       </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QPushButton" name="alertButton">
-      <property name="text">
-       <string>App is Working</string>
+      <property name="styleSheet">
+       <string notr="true">font-size: 18pt; color: #2c3e50; margin-bottom: 10px;</string>
       </property>
      </widget>
     </item>
 
-<item>
-    <widget class="QPushButton" name="scanButton">
-  <property name="text">
-   <string>Scan USB Devices</string>
-  </property>
-</widget>
+    <!-- Action Buttons Group -->
+    <item>
+     <layout class="QHBoxLayout" name="buttonRow1">
+      <item>
+       <widget class="QPushButton" name="dfuButton">
+        <property name="text"><string>Enter DFU Mode</string></property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="checkButton">
+        <property name="text"><string>Check Connection</string></property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="alertButton">
+        <property name="text"><string>Status Check</string></property>
+       </widget>
+      </item>
+     </layout>
     </item>
 
+    <!-- USB and Scan Controls -->
+    <item>
+     <layout class="QHBoxLayout" name="buttonRow2">
+      <item>
+       <widget class="QPushButton" name="scanButton">
+        <property name="text"><string>Scan USB Devices</string></property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="usbStatusButton">
+        <property name="text"><string>USB: Not Detected</string></property>
+        <property name="enabled"><bool>false</bool></property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+
+    <!-- Thunderbolt Status -->
+    <item>
+     <layout class="QHBoxLayout" name="buttonRow3">
+      <item>
+       <widget class="QPushButton" name="thunderboltStatusButton">
+        <property name="text"><string>Thunderbolt: Not Detected</string></property>
+        <property name="enabled"><bool>false</bool></property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="thunderboltGlowButton">
+        <property name="text"><string>TB Detected</string></property>
+        <property name="enabled"><bool>false</bool></property>
+        <property name="visible"><bool>false</bool></property>
+        <property name="styleSheet">
+         <string notr="true">
+          QPushButton {
+              border-radius: 30px;
+              min-width: 60px;
+              min-height: 60px;
+              max-width: 60px;
+              max-height: 60px;
+              background-color: #00cc66;
+              color: white;
+              font-weight: bold;
+              box-shadow: 0 0 15px 6px #00cc66;
+          }
+         </string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+
+    <!-- Thunderbolt Info Output -->
+    <item>
+     <widget class="QTextEdit" name="thunderboltInfoTextEdit">
+      <property name="readOnly"><bool>true</bool></property>
+      <property name="placeholderText">
+       <string>Thunderbolt device info will be displayed here...</string>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">
+        QTextEdit {
+            background-color: #f4f4f4;
+            border: 1px solid #ccc;
+            padding: 5px;
+            font-family: monospace;
+        }
+       </string>
+      </property>
+     </widget>
+    </item>
    </layout>
   </widget>
  </widget>

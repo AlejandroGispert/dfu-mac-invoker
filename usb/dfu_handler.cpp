@@ -7,9 +7,8 @@
 #include <IOKit/usb/IOUSBLib.h>
 #include <IOKit/IOCFPlugIn.h>
 #include <IOKit/usb/USBSpec.h>
- // Replace with your USB product ID
-#include "dfu_handler.h"
 #include <libusb-1.0/libusb.h>
+#include <QProcess>
 
 // dfu_handler.cpp
 #include "dfu_handler.h"
